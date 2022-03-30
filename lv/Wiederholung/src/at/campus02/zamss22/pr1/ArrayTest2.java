@@ -1,5 +1,7 @@
 package at.campus02.zamss22.pr1;
 
+import java.util.Arrays;
+
 public class ArrayTest2 {
     public static void main(String[] args) {
         String[] smartphoneNamen = {"Samsung A51", "iPhone 13", "Huawei 15", "Nokia 3210", "Xiaomi 7T"};
@@ -7,12 +9,20 @@ public class ArrayTest2 {
         // jede spalte in der zeile steht für verkaufszahlen in den jeweiligen quartalen
         int[][] smartphoneVerkaufszahlen = {{2000, 3000, 4000, 1000},
                                             {1000, 300, 1500, 7000},
-                {2200, 300, 4000, 1000}, {2100, 3000, 4000, 2000}, {200, 300, 4000, 100}};
-
+                                            {2200, 300, 4000, 1000},
+                                            {2100, 3000, 4000, 2000},
+                                            {200, 300, 4000, 100}};
+        System.out.println(smartphoneNamen); // keine gute idee - sehen nur adresse im speicher
+        // ausgabe variante 1
         for (int sNr = 0; sNr < smartphoneNamen.length; ++sNr) {
             System.out.println(smartphoneNamen[sNr]);
         }
-        // for each loop - schnellschreibvariante
+        // ausgabe variante 2 - die faule variante :)
+        System.out.println(Arrays.toString(smartphoneNamen));
+        System.out.println("**********");
+
+        // schon wieder für faule :)
+        // for each loop - schnellschreibvariante (wir möchten den inhalt nicht verändern)
         // rechts vom : steht das array (oder sonstwas was mehr daten beinhaltet)
         // links daneben meine laufvariable die den typ des inhalts des arrays hat
         // (kann einen beliebigen namen haben - eine sogenannten "hansi" variable)
@@ -35,7 +45,11 @@ public class ArrayTest2 {
         System.out.println(verkaufteAnzahlJahr(smartphoneVerkaufszahlen, -1));
         System.out.println(verkaufteAnzahlJahr(smartphoneVerkaufszahlen, 5));
         System.out.println(verkaufteAnzahlJahr(smartphoneVerkaufszahlen, 1));
-
+        System.out.println("$$$$$$$$$$");
+        String sName = erfolgreichstesSmartphoneQuartal(smartphoneVerkaufszahlen, smartphoneNamen, 42);
+        System.out.println(sName);
+        sName = erfolgreichstesSmartphoneQuartal(smartphoneVerkaufszahlen, smartphoneNamen, 4);
+        System.out.println(sName);
     }
     // Die folgende Methode soll die über das Jahr verkauften Zahlen eines Smartphones zurückliefern:
     // zahlen: unsere Verkaufszahlen
@@ -57,7 +71,23 @@ public class ArrayTest2 {
     // namen: unser smartphone namen
     // quartalNr: für welches Quartal soll berechnet werden (zwischen 1 und 4) - sonst Rückgabewert leerer String
     public static String erfolgreichstesSmartphoneQuartal(int [][] zahlen, String[] namen, int quartalNr){
-        return ""; //TODO: durch korrekten Code ersetzen
+        if(quartalNr < 1 || quartalNr > 4){
+            return "";
+        }
+        // spalten bleiben immer gleich
+        // zahlen[][quartalNr - 1]
+        // nehmen wir an erste zahl ist die groesste zahl
+        // (zugleich gehen wir auch davon aus, dass es immer zumindest eine zahl im array gibt)
+        int idxGr = 0;
+        int zahlGr = zahlen[0][quartalNr - 1];
+        for(int z = 1; z < zahlen.length; ++z){
+            if(zahlen[z][quartalNr - 1] > zahlGr){
+                zahlGr = zahlen[z][quartalNr - 1];
+                idxGr = z;
+            }
+        }
+        // nach ende der schleife zahlGr groesste Zahl, idxGr Index der groessten Zahl
+        return namen[idxGr];
     }
 
 }
