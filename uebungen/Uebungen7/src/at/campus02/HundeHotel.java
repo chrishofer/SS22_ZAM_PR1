@@ -38,12 +38,7 @@ public class HundeHotel {
 
         for(int e = 0; e < essen.length; ++e){
             String []unvertraeglich = hundeAllergie(hunde, essen[e]);
-            int vertragen = 0;
-            for(int i = 0; i > unvertraeglich.length; ++i){
-                if(unvertraeglich[i] == null){
-                    ++vertragen;
-                }
-            }
+            int vertragen = hunde.length - unvertraeglich.length; 
             if(vertragen > maxVertraeglichkeit){
                 maxVertraeglichkeit = vertragen;
                 idx = e;
